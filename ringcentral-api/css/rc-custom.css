@@ -1,0 +1,68 @@
+
+.TableOverride {
+    background-color: white !important ;  	
+	margin-top: 10px;	
+	width: 500px ;	
+}
+.TableOverride td, th {
+    padding: 5px !important ;
+	/* border: 1px solid grey ;  */   	
+}
+.TableOverride select {
+	/* height: 26px !important;   */
+}
+.TableOverride input[type="text"] {	
+	color: black;
+	width: 95% ;
+}
+.TableOverride textarea {
+	color: black;	
+	height: 200px !important;
+	width: 95% ;
+}
+#PriceSize {
+	width: 25% ; 	
+}
+.left_col {
+	width: 35% !important ;
+	/* background-color: red !important ; */ 
+}
+.right_col {
+	width: 75% !important ;	  
+}
+#page_title_img {	
+	vertical-align: middle;	
+}
+#page_title {
+	display: inline;
+	vertical-align: middle;	
+}
+/* ==================================== */
+.TableMapData {
+    background-color: white !important ;  	
+	margin-top: 10px;	
+	width: 500px ;	
+}
+.TableMapData td, th {
+    padding: 5px !important ;
+	/* border: 1px solid grey ;  */   	
+}
+.TableMapData select {
+	/* height: 26px !important;   */
+}
+.TableMapData input[type="text"] {	
+	color: black;
+	width: 95% ;
+}
+.TableMapData textarea {
+	color: black;	
+	height: 200px !important;
+	width: 95% ;
+}
+.left_col_map {
+	width: 30% !important ;
+	/* background-color: red !important ; */ 
+}
+.right_col_map {
+	width: 75% !important ;	  
+}
