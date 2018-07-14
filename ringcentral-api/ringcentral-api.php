@@ -101,7 +101,7 @@ add_action('widgets_init', 'ring_central_register_test_widget');
 /**
  * Add test widget function
  *
- * This toggles the RC Embedded Phone app
+ * This registers the ring_central_test_widget
  */
 function ring_central_register_test_widget() {
   register_widget('ring_central_test_widget') ;   
