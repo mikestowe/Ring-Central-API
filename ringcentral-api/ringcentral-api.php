@@ -1,4 +1,8 @@
 <?php 
+
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+
 /*
  Plugin Name: Ring Central Admin
  Plugin URI: https://ringcentral.com/
@@ -87,25 +91,23 @@ function ring_central_embed_phone() {
 }
 
 
+/**
+ * =================================================
+ * Add action for the a test widget
+ * =================================================
+ */
+add_action('widgets_init', 'ring_central_register_test_widget');
 
+/**
+ * Add test widget function
+ *
+ * This toggles the RC Embedded Phone app
+ */
+function ring_central_register_test_widget() {
+  register_widget('ring_central_test_widget') ;   
+}
 
+require_once("includes/rc-test-widget.inc"); 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+?>
 
