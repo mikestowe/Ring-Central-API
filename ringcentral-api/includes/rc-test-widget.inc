@@ -55,8 +55,8 @@ class ring_central_test_widget extends WP_Widget {
         $song = empty($instance['song']) ? '&nbsp;' : $instance['song'];
         
         if (!empty($title) ) { echo $before_title . $title . $after_title; } ;
-        echo '<p>Fav Movie:&nbsp;&nbsp;&nbsp;&nbsp;' . $movie . '</p>';
-        echo '<p>Fav Song:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $song . '</p>';
+        echo '<p style="margin-bottom: 5px;">Fav Movie:&nbsp;&nbsp;&nbsp;&nbsp;' . $movie . '</p>';
+        echo '<p style="margin-bottom: 5px;">Fav Song:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $song . '</p>';
         echo $after_widget ;
         
     }   

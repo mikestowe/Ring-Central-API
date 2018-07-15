@@ -13,12 +13,12 @@ ini_set('display_errors', 0);
 */
 
 // call add action func on menu building function above.
-add_action('admin_menu', 'ring_central_pages'); 
+add_action('admin_menu', 'ring_central_menu'); 
  
 /* ========================================= */
 /* Make top level menu                       */
 /* ========================================= */
-function ring_central_pages(){
+function ring_central_menu(){
     add_menu_page(
         'Ring Central Admin Management Page',       // Page & tab title
         'Ring Central',                             // Menu title
@@ -26,6 +26,7 @@ function ring_central_pages(){
         'RC_Admin',                                 // Menu slug
         'rc_config_page',                           // menu destination function call
         plugin_dir_url(__FILE__) . 'images/rc-icon.jpg', // menu icon path
+//         'dashicons-phone', // menu icon path from dashicons library
         40 );                                       // menu position level         
      
     add_submenu_page(

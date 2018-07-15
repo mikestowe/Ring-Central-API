@@ -2,9 +2,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 
-// ***************************
-// show_form
-// ***************************
+/* ************************** */
+/* show_form                  */
+/* ************************** */
 Function show_form($message, $label = "") {	
 	global $print_again, $wpdb;	
     $year_month = date('Y-m') ;	
@@ -24,7 +24,8 @@ Function show_form($message, $label = "") {
 	$result_rc = $wpdb->get_results($sql_rc, ARRAY_A);
 	
 	?></td>
-		</tr>
+	</tr>
+	<?php /* ============================================== */ ?>
 	<tr class="TableOverride">
 		<td class="left_col">
 			<p style='display: inline; <?php if ($label == "embedded_phone") echo "color:red"; ?>' >Use Embedded Phone?</p>			
@@ -41,71 +42,101 @@ Function show_form($message, $label = "") {
           }
             ?>></td>
 	</tr>
+	<?php /* ============================================== */ ?>
+	<tr class="TableOverride">
+		<td class="left_col">
+			<p style='display: inline; <?php if ($label == "oauth_client") echo "color:red"; ?>' >OAuth Client Key:</p>
+			<p style='color: red; display: inline'>*</p>
+		</td>
+		<td class="right_col"><input type="text" name="oauth_client" value="<?php 
+		  if ($print_again) {
+		      echo $_POST['oauth_client'];
+          } else {             
+              echo $result_rc[0]['oauth_client'] ;
+          }
+            ?>"></td>
+	</tr>	
+	<?php /* ============================================== */ ?>
+	<tr class="TableOverride">
+		<td class="left_col">
+			<p style='display: inline; <?php if ($label == "oauth_secret") echo "color:red"; ?>' >OAuth Secret Key:</p>
+			<p style='color: red; display: inline'>*</p>
+		</td>
+		<td class="right_col"><input type="password" name="oauth_secret" value="<?php 
+		  if ($print_again) {
+		      echo $_POST['oauth_secret'];
+          } else {             
+              echo $result_rc[0]['oauth_secret'] ;
+          }
+            ?>"></td>
+	</tr>	
+	<?php /* ============================================== */ ?>
 	<tr class="TableOverride">
 		<td colspan="2" align="center">			
+			<br/>
 			<?php 
 			$other_attributes = array( "style" => "background: #008ec2; border-color: #006799; color: #fff;" );
 			submit_button("Save Settings","","","",$other_attributes); ?>
+			<br/><br/>
 		</td>
 	</tr>
 	</table>
 <?php
-
 }
 
-// ***************************
-// check_form
-// ***************************
+/* ************************** */
+/* check_form                 */
+/* ************************** */
 Function check_form() {
 	
 	global $print_again, $wpdb;
 	
 	// var_dump($_POST) ;
 	
-	// data integrity checks	
-// 	if ($_POST['CompanyName'] == "") {
-// 	    $print_again = true;
-// 	    $label = "CompanyName";
-// 	    $error = "<b>Company Name cannot be blank.</b>";
-// 	}
+	/* data integrity checks */	
+	if ($_POST['oauth_client'] == "") {
+	    $print_again = true;
+	    $label = "oauth_client";
+	    $error = "<b>OAuth Client Key cannot be blank.</b>";
+	}
+	
+	if ($_POST['oauth_secret'] == "") {
+	    $print_again = true;
+	    $label = "oauth_secret";
+	    $error = "<b>OAuth Secret Key cannot be blank.</b>";
+	}
 	
 	// end data integrity checking
 	
 	if ($print_again == true) {
 		show_form($error, $label);
 	} else {	    
-	    
+	    /* convert and / or sanitize any needed form POST values */
 	    if ($_POST['embedded_phone'] == "on") { 
 	        $embedded_phone = 1;	        
         } else {
             $embedded_phone = 0;
         }
+        $oauth_client = strip_tags($_POST['oauth_client']) ;
+        $oauth_secret = strip_tags($_POST['oauth_secret']) ;
 	    
 	    $sql = "UPDATE `rc_control` SET ";
-	    $sql .= "`embedded_phone` = '$embedded_phone' " ;
-	    /* $sql .= "`Address1` = '$_POST[Address1]', " ;
-	    $sql .= "`Address2` = '$_POST[Address2]', " ;
-	    $sql .= "`Phone` = '$_POST[Phone]', " ;
-	    $sql .= "`Fax` = '$_POST[Fax]', " ;
-	    $sql .= "`Email` = '$_POST[Email]', " ;
-	    $sql .= "`City` = '$_POST[City]', " ;
-	    $sql .= "`Province` = '$_POST[Province]', " ;
-	    $sql .= "`PostalCode` = '$_POST[PostalCode]', " ;
-	    $sql .= "`PricePer` = '$_POST[PricePer]' " ;  */
+	    $sql .= "`embedded_phone` = $embedded_phone, " ;
+	    $sql .= "`oauth_client` = '$oauth_client', " ;
+	    $sql .= "`oauth_secret` = '$oauth_secret' " ;
+	    
 	    $sql .= "WHERE `rc_control`.`rc_control_id` = 1";
 	    
 //     	echo $sql;   
 	    $wpdb->query($sql);        
 	    show_form("Configuration Changes have been saved") ;
-	    
-	   
 	       
 	}
 }
 
-// ***************************
-// --- MAIN ---
-// ***************************
+/* ************************** */
+/*  --- MAIN ---              */
+/* ************************** */
 if ($_POST['posted']) {
 	check_form();
 } else {
