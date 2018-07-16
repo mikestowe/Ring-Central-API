@@ -45,6 +45,23 @@ Function show_form($message, $label = "") {
 	<?php /* ============================================== */ ?>
 	<tr class="TableOverride">
 		<td class="left_col">
+			<p style='display: inline; <?php if ($label == "sms_updates") echo "color:red"; ?>' >Send Post Updates over SMS Text?</p>			
+		</td>
+		<td class="right_col"><input type="checkbox" name="sms_updates" <?php 
+		if ($print_again) { 
+		    if ($_POST['sms_updates'] == "on") {
+		      echo 'CHECKED';
+		    } 
+          } else {             
+              if ($result_rc[0]['sms_updates'] == 1) {
+                  echo 'CHECKED' ;
+                }
+          }
+            ?>></td>
+	</tr>
+	<?php /* ============================================== */ ?>
+	<tr class="TableOverride">
+		<td class="left_col">
 			<p style='display: inline; <?php if ($label == "oauth_client") echo "color:red"; ?>' >OAuth Client Key:</p>
 			<p style='color: red; display: inline'>*</p>
 		</td>
@@ -117,11 +134,17 @@ Function check_form() {
         } else {
             $embedded_phone = 0;
         }
+        if ($_POST['sms_updates'] == "on") {
+            $sms_updates = 1;
+        } else {
+            $sms_updates = 0;
+        }
         $oauth_client = strip_tags($_POST['oauth_client']) ;
         $oauth_secret = strip_tags($_POST['oauth_secret']) ;
 	    
 	    $sql = "UPDATE `rc_control` SET ";
 	    $sql .= "`embedded_phone` = $embedded_phone, " ;
+	    $sql .= "`sms_updates` = $sms_updates, " ;
 	    $sql .= "`oauth_client` = '$oauth_client', " ;
 	    $sql .= "`oauth_secret` = '$oauth_secret' " ;
 	    
