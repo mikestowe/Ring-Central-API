@@ -90,21 +90,21 @@ function ringcentral_embed_phone() {
 
 /**
  * =================================================
- * Add action for the a SMS widget
+ * Add action for the contacts widget
  * =================================================
  */
-add_action('widgets_init', 'ringcentral_register_sms_widget');
+add_action('widgets_init', 'ringcentral_register_contacts_widget');
 
 /**
- * Add SMS widget function
+ * Add contacts widget function
  *
- * This registers the ringcentral_sms_widget
+ * This registers the ringcentral_contacts_widget
  */
-function ringcentral_register_sms_widget() {
-  register_widget('ringcentral_sms_widget') ;   
+function ringcentral_register_contacts_widget() {
+  register_widget('ringcentral_contacts_widget') ;   
 }
 
-require_once("includes/ringcentral-sms-widget.inc"); 
+require_once("includes/ringcentral-contacts-widget.inc"); 
 
 
 /**
@@ -144,7 +144,7 @@ function ringcentral_new_post_send_email( $post ) {
     wp_mail( 'pbmacintyre@gmail.com', $subject, $message );
     
     // now send email(s) to signed up client(s)    
-    $subscribers_sql = "SELECT * FROM `ringcentral_contact_list";
+    $subscribers_sql = "SELECT * FROM `ringcentral_contacts` WHERE ";
     
 }
 
