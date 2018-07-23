@@ -147,23 +147,4 @@ function ringcentral_new_post_send_email( $post ) {
     $subscribers_sql = "SELECT * FROM `ringcentral_contacts` WHERE ";
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
