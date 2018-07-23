@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright (C) 2018 RingCentral Inc.
+ *
+ */
 
 class ringcentral_sms_widget extends WP_Widget {
     // instantiate the class

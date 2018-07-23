@@ -1,8 +1,12 @@
+/**
+ * Copyright (C) 2018 RingCentral Inc.
+ *
+ */
 
 .TableOverride {
     background-color: white !important ;  	
 	margin-top: 10px;	
-	width: 700px ;	
+	width: 800px ;	
 }
 .TableOverride td, th {
     padding: 5px !important ;

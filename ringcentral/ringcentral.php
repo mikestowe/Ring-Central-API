@@ -1,8 +1,4 @@
 <?php 
-
-error_reporting(E_ALL);
-ini_set('display_errors', 0);
-
 /*
  Plugin Name: RingCentral
  Plugin URI: https://ringcentral.com/
@@ -11,6 +7,9 @@ ini_set('display_errors', 0);
  Version: 0.0.1
  Author URI: https://paladin-bs.com
 */
+
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
 
 // call add action func on menu building function above.
 add_action('admin_menu', 'ringcentral_menu'); 
@@ -106,5 +105,65 @@ function ringcentral_register_sms_widget() {
 }
 
 require_once("includes/ringcentral-sms-widget.inc"); 
+
+
+/**
+ * =================================================
+ * Add registration hook for plugin installation
+ * =================================================
+ */
+register_activation_hook(__FILE__, 'ringcentral_install');
+
+function ringcentral_install() {
+    require_once("includes/ringcentral-install.inc");
+}
+
+/**
+ * =================================================
+ * Add action hook for email on new post
+ * =================================================
+ */
+add_action( 'pending_to_publish', 'ringcentral_new_post_send_email');
+add_action( 'draft_to_publish', 'ringcentral_new_post_send_email');
+
+function ringcentral_new_post_send_email( $post ) {
+            
+    // If this is a revision, don't send the email.
+    if ( wp_is_post_revision( $post->ID ) )
+        return;
+    
+    global $wpdb;
+        
+    $post_url = get_permalink( $post->ID );
+    $subject = 'A post has been updated';
+    
+    $message = "A post has been updated on your website:\n\n";
+    $message .= $post->post_title . ": " . $post_url;
+    
+    // Send email to admin.
+    wp_mail( 'pbmacintyre@gmail.com', $subject, $message );
+    
+    // now send email(s) to signed up client(s)    
+    $subscribers_sql = "SELECT * FROM `ringcentral_contact_list";
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ?>

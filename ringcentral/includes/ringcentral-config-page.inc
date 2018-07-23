@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (C) 2018 RingCentral Inc.
+ *
+ */
+
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 
@@ -8,8 +13,7 @@ ini_set('display_errors', 0);
 Function show_form($message, $label = "") {	
 	global $print_again, $wpdb;	
     $year_month = date('Y-m') ;	
-	?>
-	<input type="hidden" name="posted" value="yes">	
+	?>		
 	<table class="TableOverride" >
 		<tr class="TableOverride">
 			<td colspan="2" align="center">
@@ -45,6 +49,23 @@ Function show_form($message, $label = "") {
 	<?php /* ============================================== */ ?>
 	<tr class="TableOverride">
 		<td class="left_col">
+			<p style='display: inline; <?php if ($label == "email_updates") echo "color:red"; ?>' >Send Post Updates by eMail?</p>			
+		</td>
+		<td class="right_col"><input type="checkbox" name="email_updates" <?php 
+		if ($print_again) { 
+		    if ($_POST['email_updates'] == "on") {
+		      echo 'CHECKED';
+		    } 
+          } else {             
+              if ($result_rc[0]['email_updates'] == 1) {
+                  echo 'CHECKED' ;
+                }
+          }
+            ?>></td>
+	</tr>
+	<?php /* ============================================== */ ?>
+	<tr class="TableOverride">
+		<td class="left_col">
 			<p style='display: inline; <?php if ($label == "sms_updates") echo "color:red"; ?>' >Send Post Updates over SMS Text?</p>			
 		</td>
 		<td class="right_col"><input type="checkbox" name="sms_updates" <?php 
@@ -69,7 +90,11 @@ Function show_form($message, $label = "") {
 		  if ($print_again) {
 		      echo $_POST['oauth_client'];
           } else {             
-              echo $result_rc[0]['oauth_client'] ;
+              if ($result_rc[0]['oauth_client']) {
+                echo $result_rc[0]['oauth_client'] ;
+              } else {
+                echo "&nbsp; test " ;  
+              }
           }
             ?>"></td>
 	</tr>	
@@ -83,7 +108,11 @@ Function show_form($message, $label = "") {
 		  if ($print_again) {
 		      echo $_POST['oauth_secret'];
           } else {             
-              echo $result_rc[0]['oauth_secret'] ;
+              if ($result_rc[0]['oauth_secret']) {
+                  echo $result_rc[0]['oauth_secret'] ;
+              } else {
+                  echo "&nbsp;" ;
+              } 
           }
             ?>"></td>
 	</tr>	
@@ -93,7 +122,7 @@ Function show_form($message, $label = "") {
 			<br/>
 			<?php 
 			$other_attributes = array( "style" => "background: #008ec2; border-color: #006799; color: #fff;" );
-			submit_button("Save Settings","","","",$other_attributes); ?>
+			submit_button("Save Settings","","submit","",$other_attributes); ?>
 			<br/><br/>
 		</td>
 	</tr>
@@ -107,8 +136,6 @@ Function show_form($message, $label = "") {
 Function check_form() {
 	
 	global $print_again, $wpdb;
-	
-	// var_dump($_POST) ;
 	
 	/* data integrity checks */	
 	if ($_POST['oauth_client'] == "") {
@@ -134,16 +161,24 @@ Function check_form() {
         } else {
             $embedded_phone = 0;
         }
+        if ($_POST['email_updates'] == "on") {
+            $email_updates = 1;
+        } else {
+            $email_updates = 0;
+        }
+        
         if ($_POST['sms_updates'] == "on") {
             $sms_updates = 1;
         } else {
             $sms_updates = 0;
         }
+        
         $oauth_client = strip_tags($_POST['oauth_client']) ;
         $oauth_secret = strip_tags($_POST['oauth_secret']) ;
 	    
 	    $sql = "UPDATE `ringcentral_control` SET ";
 	    $sql .= "`embedded_phone` = $embedded_phone, " ;
+	    $sql .= "`email_updates` = $email_updates, " ;
 	    $sql .= "`sms_updates` = $sms_updates, " ;
 	    $sql .= "`oauth_client` = '$oauth_client', " ;
 	    $sql .= "`oauth_secret` = '$oauth_secret' " ;
@@ -160,7 +195,7 @@ Function check_form() {
 /* ************************** */
 /*  --- MAIN ---              */
 /* ************************** */
-if ($_POST['posted']) {
+if(isset($_POST['submit'])) {
 	check_form();
 } else {
 	$message = "Adjust settings to your preferences";
