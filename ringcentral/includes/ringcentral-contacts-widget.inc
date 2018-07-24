@@ -83,13 +83,7 @@ class ringcentral_contacts_widget extends WP_Widget {
     // save public form data
     function public_save() {
         global $wpdb;
-        
-//         echo "<pre>";
-//         var_dump($_POST);
-//         echo "</pre>";
-        
-//         echo "fname: " . $_POST['widget-ring_central_contacts_widget'][2]['full_name'] ;
-        
+      
         $full_name  = strip_tags($_POST['widget-ring_central_contacts_widget'][2]['full_name']) ;
         $email      = strip_tags($_POST['widget-ring_central_contacts_widget'][2]['email']) ;
         $mobile     = strip_tags($_POST['widget-ring_central_contacts_widget'][2]['mobile']) ;        

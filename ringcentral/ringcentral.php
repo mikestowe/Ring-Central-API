@@ -9,7 +9,7 @@
 */
 
 error_reporting(E_ALL);
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 
 // call add action func on menu building function above.
 add_action('admin_menu', 'ringcentral_menu'); 
@@ -147,4 +147,28 @@ function ringcentral_new_post_send_email( $post ) {
     $subscribers_sql = "SELECT * FROM `ringcentral_contacts` WHERE ";
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
